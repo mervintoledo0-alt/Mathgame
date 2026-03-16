@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Spider-Math Verse</title>
+    <link rel="stylesheet" href="mervin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .settings-section {
+            min-height: 100vh;
+            padding: 100px 20px 50px;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #1a1a1a 100%);
+            position: relative;
+        }
+
+        .settings-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .settings-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .settings-header h1 span {
+            color: #d10000;
+        }
+
+        .settings-header p {
+            color: #aaa;
+        }
+
+        /* Settings Card */
+        .settings-card {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 12px;
+            border: 1px solid #333;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(209, 0, 0, 0.1);
+        }
+
+        .settings-card-header {
+            background: linear-gradient(90deg, rgba(209, 0, 0, 0.2), rgba(209, 0, 0, 0.05));
+            padding: 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .settings-card-icon {
+            font-size: 1.5rem;
+            color: #d10000;
+        }
+
+        .settings-card-title {
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .settings-card-body {
+            padding: 25px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .setting-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .setting-label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .setting-name {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .setting-desc {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: #333;
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: 2px solid #555;
+        }
+
+        .toggle-switch.active {
+            background: #d10000;
+            border-color: #ff0000;
+        }
+
+        .toggle-switch-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: left 0.3s;
+        }
+
+        .toggle-switch.active .toggle-switch-slider {
+            left: 26px;
+        }
+
+        /* Slider */
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #d10000;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            background: #ff0000;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #d10000;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+
+        .slider::-moz-range-thumb:hover {
+            background: #ff0000;
+        }
+
+        .slider-value {
+            color: #d10000;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Select */
+        .select-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .select-option:hover {
+            border-color: #d10000;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .select-option:focus {
+            outline: none;
+            border-color: #d10000;
+            box-shadow: 0 0 10px rgba(209, 0, 0, 0.2);
+        }
+
+        /* Action Buttons */
+        .settings-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-save, .btn-reset, .btn-back {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-save {
+            background: linear-gradient(90deg, #d10000, #ff0000);
+            color: #fff;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(209, 0, 0, 0.3);
+        }
+
+        .btn-reset {
+            background: rgba(209, 0, 0, 0.1);
+            color: #d10000;
+            border: 2px solid #d10000;
+        }
+
+        .btn-reset:hover {
+            background: #d10000;
+            color: #fff;
+        }
+
+        .btn-back {
+            background: transparent;
+            color: #aaa;
+            border: 2px solid #333;
+        }
+
+        .btn-back:hover {
+            border-color: #d10000;
+            color: #d10000;
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+            color: #4CAF50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .slider-container {
+                width: 100%;
+            }
+
+            .select-option {
+                width: 100%;
+            }
+
+            .settings-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-spider"></i>
+                <span>SPIDER-MATH VERSE</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="spidermath-game.html" class="nav-link" id="gameLink" style="display: none;">Game</a></li>
+                <li><a href="leaderboard.html" class="nav-link" id="leaderLink" style="display: none;">Leaderboard</a></li>
+                <li><a href="profile.html" class="nav-link" id="profileLink" style="display: none;">Profile</a></li>
+                <li><a href="settings.html" class="nav-link active">Settings</a></li>
+                <li><a href="index.html" class="nav-link" id="logoutLink" style="display: none;" onclick="handleSettingsLogout()">Logout</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Settings Section -->
+    <section class="settings-section">
+        <div class="settings-container">
+            <div class="settings-header">
+                <h1><i class="fas fa-cog"></i> SETTINGS</h1>
+                <p>Customize your Spider-Math experience</p>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✅ Settings saved successfully!
+            </div>
+
+            <!-- Audio Settings -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <div class="settings-card-icon">🔊</div>
+                    <div class="settings-card-title">Audio & Sound</div>
+                </div>
+                <div class="settings-card-body">
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Sound Effects</div>
+                            <div class="setting-desc">Enable game sound effects</div>
+                        </div>
+                        <div class="toggle-switch active" id="soundToggle">
+                            <div class="toggle-switch-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Background Music</div>
+                            <div class="setting-desc">Enable background music</div>
+                        </div>
+                        <div class="toggle-switch active" id="musicToggle">
+                            <div class="toggle-switch-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Master Volume</div>
+                            <div class="setting-desc">Adjust overall volume level</div>
+                        </div>
+                        <div class="slider-container">
+                            <input type="range" min="0" max="100" value="80" class="slider" id="volumeSlider">
+                            <span class="slider-value" id="volumeValue">80%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Settings -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <div class="settings-card-icon">🎮</div>
+                    <div class="settings-card-title">Game Settings</div>
+                </div>
+                <div class="settings-card-body">
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Difficulty Level</div>
+                            <div class="setting-desc">Default difficulty for new games</div>
+                        </div>
+                        <select class="select-option" id="difficultySelect">
+                            <option value="easy">Easy</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="hard">Hard</option>
+                            <option value="extreme">Extreme</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Time Bonus</div>
+                            <div class="setting-desc">Enable bonus points for quick answers</div>
+                        </div>
+                        <div class="toggle-switch active" id="timeBonusToggle">
+                            <div class="toggle-switch-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Streak Bonus</div>
+                            <div class="setting-desc">Enable bonus points for consecutive correct answers</div>
+                        </div>
+                        <div class="toggle-switch active" id="streakBonusToggle">
+                            <div class="toggle-switch-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Animations</div>
+                            <div class="setting-desc">Show animations and visual effects</div>
+                        </div>
+                        <div class="toggle-switch active" id="animationsToggle">
+                            <div class="toggle-switch-slider"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Settings -->
+            <div class="settings-card">
+                <div class="settings-card-header">
+                    <div class="settings-card-icon">🎨</div>
+                    <div class="settings-card-title">Display & Theme</div>
+                </div>
+                <div class="settings-card-body">
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Dark Theme</div>
+                            <div class="setting-desc">Use dark theme (currently only option)</div>
+                        </div>
+                        <div class="toggle-switch active" id="darkThemeToggle">
+                            <div class="toggle-switch-slider"></div>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-label">
+                            <div class="setting-name">Show Tooltips</div>
+                            <div class="setting-desc">Display helpful tooltips on hover</div>
+                        </div>
+                        <div class="toggle-switch active" id="tooltipsToggle">
+                            <div class="toggle-switch-slider"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="settings-actions">
+                <button class="btn-back" onclick="window.history.back()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="btn-reset" id="resetBtn">
+                    <i class="fas fa-redo"></i> Reset to Default
+                </button>
+                <button class="btn-save" id="saveBtn">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>With great power comes great responsibility. &copy; 2024 Spider-Math Verse</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>

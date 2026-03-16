@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Math Challenge | Test Your Skills</title>
+    <link rel="stylesheet" href="spidermath-game.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Floating Web Particles -->
+    <div class="web-particles" id="webParticles"></div>
+    
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spider-spinner">
+            <i class="fas fa-spider"></i>
+        </div>
+    </div>
+    
+    <!-- Confetti Effect -->
+    <div class="confetti-container" id="confettiContainer"></div>
+    
+    <!-- Streak Indicator -->
+    <div class="streak-indicator" id="streakIndicator">
+        <span class="streak-icon">🔥</span>
+        <span id="streakText">Spider-Streak: 3x</span>
+    </div>
+    
+    <!-- TOP NAVBAR -->
+    <nav class="game-navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-spider"></i>
+                <span>SPIDER-MATH CHALLENGE</span>
+            </div>
+            <div class="nav-links-game" style="display: flex; gap: 20px; list-style: none; margin: 0;">
+                <a href="leaderboard.html" style="color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.3s;" onmouseover="this.style.color='#d10000'" onmouseout="this.style.color='#fff'">
+                    <i class="fas fa-crown"></i>Leaderboard
+                </a>
+                <a href="profile.html" style="color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.3s;" onmouseover="this.style.color='#d10000'" onmouseout="this.style.color='#fff'">
+                    <i class="fas fa-user"></i>Profile
+                </a>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user-ninja"></i>
+                </div>
+                <div class="user-text">Welcome, <strong id="gameUsername">Spider-Hero</strong>!</div>
+            </div>
+            <div class="music-control">
+                <i class="fas fa-music"></i>
+                <input type="range" id="musicVolumeSlider" min="0" max="100" value="50" class="volume-slider" title="Game Music Volume">
+            </div>
+            <a href="index.html" class="logout-btn" id="logoutBtn" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- MAIN CONTAINER -->
+    <div class="game-container">
+        <!-- HEADER -->
+        <div class="game-header">
+            <div class="web-lines">
+                <div class="web-line"></div>
+                <div class="web-line"></div>
+                <div class="web-line"></div>
+            </div>
+            <h1><i class="fas fa-spider"></i> SPIDER-MATH CHALLENGE</h1>
+            <p class="tagline">With great power comes great calculation! Defeat the equations before time runs out.</p>
+        </div>
+        
+        <!-- OPERATION SELECTION PAGE -->
+        <div class="selection-page" id="selectionPage">
+            <div class="welcome-card">
+                <div class="spider-logo">
+                    <i class="fas fa-spider"></i>
+                </div>
+                <h2>WELCOME, MATH HERO!</h2>
+                <p class="welcome-text">Select your mission below. Each operation has different difficulty levels and time limits. Prove you have the spider-sense for numbers!</p>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-scroll"></i> HOW TO PLAY:</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Select an operation (+, -, ×, ÷)</li>
+                        <li><i class="fas fa-clock"></i> Answer 10 questions before time runs out</li>
+                        <li><i class="fas fa-star"></i> Each correct answer gives +10 points</li>
+                        <li><i class="fas fa-bolt"></i> Get bonus points for quick answers</li>
+                        <li><i class="fas fa-fire"></i> Build streaks for extra rewards!</li>
+                        <li><i class="fas fa-shield-alt"></i> Difficulty affects score multiplier</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h2 class="section-title">CHOOSE YOUR MISSION:</h2>
+            
+            <div class="operations-grid">
+                <!-- ADDITION -->
+                <div class="operation-card" onclick="startGame('addition')">
+                    <div class="operation-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="operation-content">
+                        <h3>WEB OF ADDITION</h3>
+                        <p>Practice adding numbers together with spider-precision. Start your journey here.</p>
+                        <div class="operation-details">
+                            <span class="difficulty easy"><i class="fas fa-spider"></i> Beginner Friendly</span>
+                            <span class="timer"><i class="fas fa-clock"></i> 10s per question</span>
+                        </div>
+                    </div>
+                    <div class="web-corner"></div>
+                </div>
+                
+                <!-- SUBTRACTION -->
+                <div class="operation-card" onclick="startGame('subtraction')">
+                    <div class="operation-icon">
+                        <i class="fas fa-minus"></i>
+                    </div>
+                    <div class="operation-content">
+                        <h3>SUBTRACTION STRIKE</h3>
+                        <p>Master subtracting numbers with progressively harder challenges. Swing into action!</p>
+                        <div class="operation-details">
+                            <span class="difficulty medium"><i class="fas fa-spider"></i> Intermediate</span>
+                            <span class="timer"><i class="fas fa-clock"></i> 10s per question</span>
+                        </div>
+                    </div>
+                    <div class="web-corner"></div>
+                </div>
+                
+                <!-- MULTIPLICATION -->
+                <div class="operation-card" onclick="startGame('multiplication')">
+                    <div class="operation-icon">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="operation-content">
+                        <h3>MULTIPLICATION WEB</h3>
+                        <p>Challenge your times tables with multiplication mastery. Your spider-sense will tingle!</p>
+                        <div class="operation-details">
+                            <span class="difficulty hard"><i class="fas fa-spider"></i> Advanced</span>
+                            <span class="timer"><i class="fas fa-clock"></i> 10s per question</span>
+                        </div>
+                    </div>
+                    <div class="web-corner"></div>
+                </div>
+                
+                <!-- DIVISION -->
+                <div class="operation-card" onclick="startGame('division')">
+                    <div class="operation-icon">
+                        <i class="fas fa-divide"></i>
+                    </div>
+                    <div class="operation-content">
+                        <h3>DIVISION DASH</h3>
+                        <p>Divide numbers accurately with whole number answers only. The ultimate test!</p>
+                        <div class="operation-details">
+                            <span class="difficulty expert"><i class="fas fa-spider"></i> Expert Level</span>
+                            <span class="timer"><i class="fas fa-clock"></i> 10s per question</span>
+                        </div>
+                    </div>
+                    <div class="web-corner"></div>
+                </div>
+            </div>
+            
+            <!-- ENDLESS MODE SECTION -->
+            <h2 class="section-title" style="margin-top: 60px;">⚡ ULTIMATE CHALLENGES</h2>
+            
+            <div class="endless-mode-container">
+                <div class="endless-mode-card" onclick="startEndlessMode()">
+                    <div class="endless-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <div class="endless-content">
+                        <h3>ENDLESS SURVIVAL</h3>
+                        <p>How long can you survive? Answer questions with only 3 lives. Wrong answer = -1 life. Keep going until you're defeated!</p>
+                        <div class="endless-features">
+                            <span class="feature-tag"><i class="fas fa-heart"></i> 3 Lives</span>
+                            <span class="feature-tag"><i class="fas fa-infinity"></i> Infinite Questions</span>
+                            <span class="feature-tag"><i class="fas fa-bolt"></i> All Operations</span>
+                            <span class="feature-tag"><i class="fas fa-crown"></i> Leaderboard Ranked</span>
+                        </div>
+                    </div>
+                    <div class="web-corner"></div>
+                </div>
+                
+                <div class="speedrun-mode-card" onclick="startSpeedRunMode()">
+                    <div class="speedrun-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="speedrun-content">
+                        <h3>SPEED RUN</h3>
+                        <p>Lightning fast reflexes needed! Only 5 seconds per question. Survive with 3 lives. Can you handle the heat?</p>
+                        <div class="speedrun-features">
+                            <span class="feature-tag"><i class="fas fa-heart"></i> 3 Lives</span>
+                            <span class="feature-tag"><i class="fas fa-bolt"></i> 5 Sec/Q</span>
+                            <span class="feature-tag"><i class="fas fa-bolt"></i> All Operations</span>
+                            <span class="feature-tag"><i class="fas fa-crown"></i> Leaderboard Ranked</span>
+                        </div>
+                    </div>
+                    <div class="web-corner"></div>
+                </div>
+            </div>
+            
+            <div class="footer-note">
+                <p><i class="fas fa-exclamation-circle"></i> With great power comes great responsibility. &copy; 2023 Spider-Math Verse</p>
+                <p>Total Missions: 10 questions per operation | Best of luck, hero!</p>
+            </div>
+            
+            <!-- COMING SOON SECTION -->
+            <div class="coming-soon-section">
+                <h2 class="section-title">🚀 COMING SOON</h2>
+                <div class="coming-soon-features">
+                    <div class="feature-box">
+                        <i class="fas fa-gamepad"></i>
+                        <h4>New Game Modes</h4>
+                        <p>More challenges and ways to test your skills</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-trophy"></i>
+                        <h4>Seasonal Tournaments</h4>
+                        <p>Compete in epic battles with global players</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-star"></i>
+                        <h4>Achievement System</h4>
+                        <p>Unlock badges and special rewards</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-users"></i>
+                        <h4>Multiplayer Mode</h4>
+                        <p>Challenge your friends in real-time battles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- GAME PAGE -->
+        <div class="game-page" id="gamePage" style="display: none;">
+            <!-- PROGRESS BAR -->
+            <div class="mission-progress">
+                <div class="progress-label">
+                    <i class="fas fa-flag"></i>
+                    <span>Mission Progress: <strong id="currentMission">1</strong>/10</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+            
+            <!-- DASHBOARD STATS -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="score">0</div>
+                        <div class="stat-label">Web-Score</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="correctCount">0</div>
+                        <div class="stat-label">Correct Hits</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="wrongCount">0</div>
+                        <div class="stat-label">Missed Shots</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="timeLeft">10</div>
+                        <div class="stat-label">Seconds Left</div>
+                    </div>
+                    <div class="timer-pulse"></div>
+                </div>
+                
+                <div class="stat-card" id="livesCard" style="display: none;">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="livesDisplay">3</div>
+                        <div class="stat-label">Lives Remaining</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QUESTION CARD -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="question-title">
+                        <i class="fas fa-spider"></i>
+                        <span>MISSION <span id="currentQuestion">1</span>: SOLVE THE EQUATION</span>
+                    </div>
+                    <div class="question-timer" id="questionTimer">
+                        <i class="fas fa-hourglass-half"></i>
+                        <span>TIME: <span id="timerDisplay">10</span>s</span>
+                    </div>
+                </div>
+                
+                <div class="question-display">
+                    <div class="math-expression" id="questionText">
+                        <span id="num1">8</span>
+                        <span id="operator">×</span>
+                        <span id="num2">7</span>
+                        <span>=</span>
+                        <span class="question-mark">?</span>
+                    </div>
+                    <div class="operation-name" id="operation">WEB OF MULTIPLICATION</div>
+                </div>
+                
+                <!-- ANSWER CHOICES -->
+                <div class="choices-grid" id="choicesGrid">
+                    <!-- Choices will be generated by JavaScript -->
+                </div>
+                
+                <!-- FEEDBACK -->
+                <div class="feedback-message" id="feedback"></div>
+                
+                <!-- GAME CONTROLS -->
+                <div class="game-controls">
+                    <button class="control-btn web-swing" onclick="goBackToSelection()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Abort Mission</span>
+                    </button>
+                    <button class="control-btn web-attack" onclick="nextQuestion()">
+                        <span>Next Challenge</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- GAME OVER SCREEN -->
+        <div class="game-over-screen" id="gameOver" style="display: none;">
+            <div class="game-over-content">
+                <div class="trophy-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                
+                <h2>MISSION COMPLETE!</h2>
+                <p class="subtitle">Great power requires great calculation!</p>
+                
+                <div class="final-score">
+                    <span class="score-label">YOUR WEB-SCORE</span>
+                    <div class="score-value" id="finalScore">0</div>
+                    <span class="score-sub">POINTS</span>
+                </div>
+                
+                <div class="results-summary">
+                    <div class="result-row">
+                        <span class="result-label"><i class="fas fa-flag"></i> Total Missions:</span>
+                        <span class="result-value" id="totalQuestions">10</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><i class="fas fa-check"></i> Successful Hits:</span>
+                        <span class="result-value" id="correctAnswers">0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><i class="fas fa-times"></i> Missed Shots:</span>
+                        <span class="result-value" id="wrongAnswers">0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><i class="fas fa-bullseye"></i> Accuracy:</span>
+                        <span class="result-value" id="accuracy">0%</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><i class="fas fa-fire"></i> Best Combo:</span>
+                        <span class="result-value" id="bestStreak">0x</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label"><i class="fas fa-spider"></i> Operation:</span>
+                        <span class="result-value" id="operationName">Multiplication</span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn web-attack" onclick="playAgain()">
+                        <i class="fas fa-redo"></i>
+                        <span>Play Again</span>
+                    </button>
+                    <button class="action-btn web-swing" onclick="goToSelection()">
+                        <i class="fas fa-tasks"></i>
+                        <span>Choose New Mission</span>
+                    </button>
+                    <a href="index.html" class="action-btn web-retreat">
+                        <i class="fas fa-home"></i>
+                        <span>Back to HQ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="game-footer" id="gameFooter" style="display: none;">
+            <p><i class="fas fa-quote-left"></i> Remember: Your spider-sense isn't just for danger—it's for numbers too! <i class="fas fa-quote-right"></i></p>
+        </div>
+    </div>
+
+    <!-- Audio Elements for Sound Effects -->
+    <audio id="correctSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AQACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+    <audio id="wrongSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AQACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+    <audio id="timeUpSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AQACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+    <audio id="countdownSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AQACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+    <audio id="doubleKillSound" preload="auto">
+        <source src="sounds/double-kill.mp4" type="audio/mp4">
+        <source src="sounds/double-kill.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="firstBloodSound" preload="auto">
+        <source src="sounds/first-blood.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="tripleKillSound" preload="auto">
+        <source src="sounds/triple-kill.mp4" type="audio/mp4">
+        <source src="sounds/triple-kill.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="megaKillSound" preload="auto">
+        <source src="sounds/mega-kill.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="unstoppableSound" preload="auto">
+        <source src="sounds/unstoppable.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="monsterKillSound" preload="auto">
+        <source src="sounds/monster-kill.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="godlikeSound" preload="auto">
+        <source src="sounds/godlike.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="rumbleSound" preload="auto">
+        <source src="sounds/rumble.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Game Background Music -->
+    <audio id="gameMusic" preload="auto" loop>
+        <source src="game-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="spidermath-game.js"></script>
+</body>
+</html>

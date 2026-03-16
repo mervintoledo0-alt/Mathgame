@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Spider-Math Verse</title>
+    <link rel="stylesheet" href="mervin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .profile-section {
+            min-height: 100vh;
+            padding: 100px 20px 50px;
+            background: radial-gradient(ellipse at center, #0a0a0a 0%, #1a1a1a 100%);
+            position: relative;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .profile-header {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid #333;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(209, 0, 0, 0.2);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #d10000, #ff0000);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin: 0 auto 20px;
+            border: 3px solid #d10000;
+            box-shadow: 0 0 20px rgba(209, 0, 0, 0.5);
+        }
+
+        .profile-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin: 20px 0 10px;
+            color: #fff;
+        }
+
+        .profile-status {
+            color: #d10000;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .profile-date {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #d10000;
+            box-shadow: 0 10px 25px rgba(209, 0, 0, 0.2);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            color: #d10000;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Game History */
+        .history-section {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #333;
+            box-shadow: 0 15px 35px rgba(209, 0, 0, 0.2);
+        }
+
+        .history-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            border-bottom: 2px solid #d10000;
+            padding-bottom: 15px;
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .history-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #d10000;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-game {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .history-meta {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        .history-score {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #d10000;
+            text-align: right;
+        }
+
+        .no-history {
+            text-align: center;
+            padding: 40px 20px;
+            color: #aaa;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-play {
+            background: linear-gradient(90deg, #d10000, #ff0000);
+            color: #fff;
+        }
+
+        .btn-play:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(209, 0, 0, 0.3);
+        }
+
+        .btn-settings {
+            background: rgba(209, 0, 0, 0.1);
+            color: #d10000;
+            border: 2px solid #d10000;
+        }
+
+        .btn-settings:hover {
+            background: #d10000;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                padding: 25px;
+            }
+
+            .profile-name {
+                font-size: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .history-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .history-score {
+                text-align: center;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-spider"></i>
+                <span>SPIDER-MATH VERSE</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="spidermath-game.html" class="nav-link" id="gameLink" style="display: none;">Game</a></li>
+                <li><a href="leaderboard.html" class="nav-link" id="leaderLink" style="display: none;">Leaderboard</a></li>
+                <li><a href="profile.html" class="nav-link active">Profile</a></li>
+                <li><a href="index.html" class="nav-link" id="logoutLink" style="display: none;" onclick="handleProfileLogout()">Logout</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar" id="profileAvatar">👤</div>
+                <div class="profile-name" id="profileName">Not Logged In</div>
+                <div class="profile-status" id="profileStatus">Login to save your progress</div>
+                <div class="profile-date" id="profileDate"></div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-value" id="totalGames">0</div>
+                    <div class="stat-label">Total Games</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="bestScore">0</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="averageScore">0</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="winRate">0%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+            </div>
+
+            <!-- Game History -->
+            <div class="history-section">
+                <div class="history-title">📜 Recent Games</div>
+                <div class="history-list" id="historyList">
+                    <div class="no-history">
+                        <i class="fas fa-inbox" style="font-size: 2rem; color: #d10000; margin-bottom: 10px; display: block;"></i>
+                        <p>No games played yet. Go play and start building your history!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="spidermath-game.html" class="btn-action btn-play">
+                    <i class="fas fa-play"></i> Play Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>With great power comes great responsibility. &copy; 2024 Spider-Math Verse</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
